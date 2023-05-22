@@ -8,7 +8,6 @@
 </header>
 <div class="blog">
     <p>Список сотрудников</p>
-    <form th:action="@{/admin}" method="GET"><br>
         <table>
             <thead>
             <th>ID</th>
@@ -31,10 +30,13 @@
                 <td th:text="${bus.getTotalCapacity}"></td>
                 <td th:text="${bus.getPassengersNow}"></td>
                 <td th:text="${bus.getDoor}"></td>
-                <td><a th:href="@{/edit/{id}(id=${bus.getId})}"
+                <td><a th:href="@{/admin/edit/{id}(id=${bus.getId})}"
                        class="btn3">Изменить</a></td>
             </tr>
         </table>
+    </form>
+    <form th:action="@{/admin/new}" method="get">
+        <button class="btn1 button" type="submit" method="get" >Добавить автобус</button>
     </form>
 </div>
 </body>

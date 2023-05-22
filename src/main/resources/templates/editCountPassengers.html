@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<header>
+</header>
+<div class="blog">
+  <p>Список сотрудников</p>
+    <table>
+      <thead>
+      <th>ID</th>
+      <th>Регистрационный номер</th>
+      <th>Марка</th>
+      <th>Год выпуска</th>
+      <th>Номер маршрута</th>
+      <th>Сидящих мест</th>
+      <th>Всего пассажиров</th>
+      <th>Сейсас пассажиров</th>
+      <th>Открыты ли двери</th>
+      </thead>
+      <tbody>
+      <tr th:each="bus: ${bus}">
+        <form th:action="'/countPassengers/' + ${bus.getId}" method="post">
+          <table style="{width: 100%}">
+            <td th:text="${bus.getId}"></td>
+            <td th:text="${bus.getNumber}"></td>
+            <td th:text="${bus.getBrand}"></td>
+            <td th:text="${bus.getYear}"></td>
+            <td th:text="${bus.getNumberRout}"></td>
+            <td th:text="${bus.getSeating}"></td>
+            <td th:text="${bus.getTotalCapacity}"></td>
+            <td><input th:value="${bus.getPassengersNow}" type="number" min="0" max="${bus.getTotalCapacity}" id="passengersNow" name="passengersNow"></td>
+            <td th:text="${bus.getDoor}"></td>
+            <td><a th:href="@{/doors/{id}(id=${bus.getId})}"
+               class="btn3">Двери</a>
+            </td>
+            <tr>
+              <td colspan="7">
+                <div class="tableFooter">
+                    <button class="btn1" type="submit">Подтвердить изменения
+                    </button>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </tr>
+      </tbody>
+    </table>
+</div>
+</body>
+
+</html>

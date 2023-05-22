@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<header></header>
+<div class="blog">
+  <div class="container">
+    <p>Параметров сотрудников</p>
+    <table>
+      <thead>
+      <th>ID</th>
+      <th>Регистрационный номер</th>
+      <th>Марка</th>
+      <th>Год выпуска</th>
+      <th>Номер маршрута</th>
+      <th>Сидящих мест</th>
+      <th>Всего пассажиров</th>
+      <th>Сейсас пассажиров</th>
+      <th>Открыты ли двери</th>
+      </thead>
+      <tbody>
+      <tr th:each="bus: ${bus}">
+        <form th:action="'/admin/' + ${bus.getId}" method="post">
+          <table style="{width: 100%}">
+            <tr>
+              <td th:text=${bus.getId}></td>
+              <td><input th:value="${bus.getNumber}" type="text" id="number" name="number"></td>
+              <td><input th:value="${bus.getBrand}" type="text" id="brand" name="brand"></td>
+              <td><input th:value="${bus.getYear}" type="text" id="year" name="year"></td>
+              <td><input th:value="${bus.getNumberRout}" type="text" id="numberRout" name="numberRout"></td>
+              <td><input th:value="${bus.getSeating}" type="number" min="0" max=100 id="seating" name="seating"></td>
+              <td><input th:value="${bus.getTotalCapacity}" type="number" min="0" max=100 id="totalCapacity" name="totalCapacity"></td>
+              <td th:text="${bus.getPassengersNow}" id="passengersNow" name="passengersNow"></td>
+              <td th:text="${bus.getDoor}" id="door",name="door"></td>
+            </tr>
+            <tr>
+              <td colspan="7">
+                <div class="tableFooter">
+                  <a th:href="@{/admin/delete/{id}(id=${bus.getId})}">
+                    <button class="btn1" type="button">Удалить</button>
+                  </a>
+                  <a th:href="'/admin/' + ${bus.getId}">
+                    <button class="btn1" type="submit">Подтвердить изменения
+                    </button></a>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

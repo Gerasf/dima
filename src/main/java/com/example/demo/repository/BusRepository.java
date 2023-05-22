@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.abobus;
+import com.example.demo.entity.Bus;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.springframework.scheduling.annotation.Async;
@@ -15,27 +15,26 @@ import java.util.Comparator;
 import java.util.List;
 
 @Repository
-public class repo   {
-    private final static String fileName = "C:\\proga\\demo\\src\\main\\resources\\DataContext.json";
+public class BusRepository {
+    private final static String fileName = "src/main/resources/DataContext.json";
     private Gson gson;
 
-
-    private Comparator<abobus> idComparator = new Comparator<abobus>() {
+    private Comparator<Bus> idComparator = new Comparator<Bus>() {
         @Override
-        public int compare(abobus o1, abobus o2) {
+        public int compare(Bus o1, Bus o2) {
             return o1.getId().compareTo(o2.getId());
         }
     };
 
-    public repo(Gson gson) {
+    public BusRepository(Gson gson) {
         this.gson = gson;
     }
     @Async
-    private List<abobus> loadData() {
-        var list = new ArrayList<abobus>();
+    private List<Bus> loadData() {
+        var list = new ArrayList<Bus>();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-            list = gson.fromJson(bufferedReader, new TypeToken<List<abobus>>() {}.getType());
+            list = gson.fromJson(bufferedReader, new TypeToken<List<Bus>>() {}.getType());
             bufferedReader.close();
             System.out.println("Lighting objects have been read from " + fileName + " file.");
             list.sort(idComparator);
@@ -47,10 +46,10 @@ public class repo   {
     }
 
     @Async
-    private void writeData(List<abobus> abobuses) {
+    private void writeData(List<Bus> buses) {
         try {
             FileWriter fileWriter = new FileWriter(fileName);
-            gson.toJson(abobuses, fileWriter);
+            gson.toJson(buses, fileWriter);
             fileWriter.close();
             System.out.println("Lighting objects have been saved to " + fileName + " file.");
         } catch (IOException e) {
@@ -58,20 +57,20 @@ public class repo   {
         }
     }
     @Async
-    public abobus getByID(Long id) {
-        List<abobus> abbob = loadData();
+    public Bus getByID(Long id) {
+        List<Bus> abbob = loadData();
         var buff = abbob.stream().filter(x -> x.getId() == Integer.parseInt(id.toString())).findFirst().get();
         return buff;
     }
     @Async
     public void delete(Long myClassId) {
-        List<abobus> myClassList = loadData();
+        List<Bus> myClassList = loadData();
         myClassList.removeIf(x -> myClassId - 1 >= 0 && x.getId() == myClassId);
         writeData(myClassList);
     }
     @Async
-    public void save(abobus x) {
-        List<abobus> myClassList = loadData();
+    public void save(Bus x) {
+        List<Bus> myClassList = loadData();
         if (myClassList.isEmpty()) {
             x.setId(Long.valueOf(1));
         } else {
@@ -81,27 +80,27 @@ public class repo   {
         writeData(myClassList);
     }
     @Async
-    public List<abobus> findAll() {
-        List<abobus> myClassList = loadData();
+    public List<Bus> findAll() {
+        List<Bus> myClassList = loadData();
         return myClassList;
     }
     @Async
-    public abobus update(abobus abob) {
-        List<abobus> abobus = loadData();
-        if (!abobus.isEmpty() && abob != null) {
+    public Bus update(Bus abob) {
+        List<Bus> Bus = loadData();
+        if (!Bus.isEmpty() && abob != null) {
             var id = 0;
-            for (var item : abobus) {
+            for (var item : Bus) {
                 if (item.getId() == abob.getId()) {
                     break;
                 }
                 id = id + 1;
             }
-            abobus.set(
+            Bus.set(
                     id,
                     abob);
         }
-        writeData(abobus);
-        abobus = loadData();
-        return abobus.stream().filter(x -> (x.getId()) == abob.getId()).toList().get(0);
+        writeData(Bus);
+        Bus = loadData();
+        return Bus.stream().filter(x -> (x.getId()) == abob.getId()).toList().get(0);
     }
 }
