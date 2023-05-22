@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+</head>
+
+<body>
+<header></header>
+
+<div class="blog">
+    <div class="container">
+        <p>Параметры сотрудника</p>
+        <table>
+            <thead>
+            <th>ID</th>
+            <th>регис номер</th>
+            <th>марка</th>
+            <th>год выпуска</th>
+            <th>номер маршрута</th>
+            <th>сидящих мест</th>
+            <th>всего пассажиров</th>
+            <th>сейсас пассажиров</th>
+            </thead>
+            <tbody>
+            <tr th:each="abobus: ${abobus}">
+                <form th:action="'/edit/' + ${abobus.getId}" method="post">
+                    <table style="{width: 100%}">
+                        <tr>
+                            <td th:text=${abobus.getId}></td>
+                            <td><input th:value="${abobus.getnumber}" type="text" id="number"
+                                       name="number">
+                            </td>
+                            <td><input th:value="${abobus.getbrand}" type="text" id="brand"
+                                       name="brand">
+                            </td>
+                            <td><input th:value="${abobus.getyear}" type="text" id="year"
+                                       name="year">
+                            </td>
+                            <td><input th:value="${abobus.getnumber_rout}" type="text" id="number_rout" name="number_rout">
+                            </td>
+                            <td><input th:value="${abobus.getseating}" type="text" id="seating" name="seating"></td>
+                            <td><input th:value="${abobus.gettotal_capacity}" type="text" id="total_capacity"
+                                       name="total_capacity">
+                            </td>
+                            <td><input th:value="${abobus.getpassengers_now}" type="text" id="passengers_now"
+                                       name="passengers_now">
+                            </td>
+                            </td>
+                            <td>
+                            <td th:value="${abobus.getStatus}" name="status"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="7">
+                                <div class="tableFooter">
+                                    <a th:href="@{/delete/{id}(id=${abobus.getId})}">
+                                        <button class="btn1" type="button">Удалить</button>
+                                    </a>
+                                    <a th:href="'/edit/' + ${abobus.getId}">
+                                        <button class="btn1" type="submit"> Подтвердить пользователя
+                                        </button></a>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+</body>
+</html>
